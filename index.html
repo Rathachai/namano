@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elapsed Time (GMT+7)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .timer {
+            font-size: 2em;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- <h1>Elapsed Time Since May 5, 2018 (GMT+7)</h1> -->
+    <h1 class="timer" id="elapsed-time">
+        Calculating...
+    </h1>
+
+    <script>
+        function updateElapsedTime() {
+            const startDate = new Date("2018-05-05T09:59:00+07:00"); // Start date in GMT+7
+            const now = new Date();
+
+            // Adjust current time to GMT+7
+            const offsetMs = (7 * 60) * 60 * 1000; // GMT+7 offset in milliseconds
+            const gmt7Now = now; // new Date(now.getTime() + offsetMs - now.getTimezoneOffset() * 60 * 1000);
+
+            // Calculate elapsed time in milliseconds
+            const elapsedMs = gmt7Now - startDate;
+
+            // Convert to readable units
+            const seconds = Math.floor(elapsedMs / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(minutes / 60);
+            const days = Math.floor(hours / 24);
+            const months = Math.floor(days / 30.44); // Approximate month length
+            const years = Math.floor(months / 12);
+
+            // Calculate remainder for display
+            const displayMonths = months % 12;
+            const displayDays = days % 30.44;
+            const displayHours = hours % 24;
+            const displayMinutes = minutes % 60;
+            const displaySeconds = seconds % 60;
+
+            // Update the display
+            document.getElementById("elapsed-time").textContent = 
+                `${years} Years, ${displayMonths} Months, ${Math.floor(displayDays)} Days, ` +
+                `${displayHours} Hours, ${displayMinutes} Minutes, ${displaySeconds} Seconds`;
+        }
+
+        // Update the elapsed time every second
+        setInterval(updateElapsedTime, 1000);
+        updateElapsedTime();
+    </script>
+</body>
+</html>
